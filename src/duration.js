@@ -407,10 +407,22 @@ export default class Duration {
     if (!this.isValid) return null;
 
     let s = "P";
+    if (
+      this.weeks !== 0 &&
+      this.years +
+        this.months +
+        this.days +
+        this.hours +
+        this.minutes +
+        this.seconds +
+        this.milliseconds ===
+        0
+    )
+      return s + this.weeks + "W";
+
     if (this.years !== 0) s += this.years + "Y";
     if (this.months !== 0 || this.quarters !== 0) s += this.months + this.quarters * 3 + "M";
-    if (this.weeks !== 0) s += this.weeks + "W";
-    if (this.days !== 0) s += this.days + "D";
+    if (this.days !== 0 || this.weeks !== 0) s += this.days + this.weeks * 7 + "D";
     if (this.hours !== 0 || this.minutes !== 0 || this.seconds !== 0 || this.milliseconds !== 0)
       s += "T";
     if (this.hours !== 0) s += this.hours + "H";
